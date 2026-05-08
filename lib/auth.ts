@@ -1,5 +1,4 @@
 import { SignJWT, jwtVerify } from 'jose'
-import bcrypt from 'bcryptjs'
 
 const SECRET = new TextEncoder().encode(
   process.env.JWT_SECRET || 'super-secret-dev-key-change-in-production'
@@ -29,12 +28,14 @@ export async function verifyToken(token: string): Promise<JwtPayload | null> {
 }
 
 export async function hashPassword(password: string): Promise<string> {
-  return bcrypt.hash(password, 10)
+  const { hash } = await import('bcryptjs')
+  return hash(password, 10)
 }
 
 export async function comparePassword(
   plain: string,
   hashed: string
 ): Promise<boolean> {
-  return bcrypt.compare(plain, hashed)
+  const { compare } = await import('bcryptjs')
+  return compare(plain, hashed)
 }

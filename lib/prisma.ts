@@ -6,8 +6,6 @@ const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient }
 function shouldUseAdapter(): boolean {
   // Explicit opt-in via PRISMA_USE_ADAPTER=true
   if (process.env.PRISMA_USE_ADAPTER === 'true') return true
-  // Enable by default in production when a DATABASE_URL is present
-  if (process.env.NODE_ENV === 'production' && !!process.env.DATABASE_URL) return true
   return false
 }
 
