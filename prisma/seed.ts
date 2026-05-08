@@ -1,9 +1,13 @@
-import { PrismaClient, Role, TaskStatus, Priority } from '@prisma/client'
+import { PrismaClient, Role, TaskStatus, Priority } from '../generated/prisma'
+const prisma = new PrismaClient()
 import bcrypt from 'bcryptjs'
 
-const prisma = new PrismaClient()
-
 async function main() {
+  await prisma.projectMember.deleteMany()
+  await prisma.task.deleteMany()
+  await prisma.project.deleteMany()
+  await prisma.user.deleteMany()
+
   // Create demo users
   const adminUser = await prisma.user.upsert({
     where: { email: 'admin@demo.com' },
