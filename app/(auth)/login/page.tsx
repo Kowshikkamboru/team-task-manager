@@ -8,6 +8,7 @@ export default function LoginPage() {
   const [form, setForm] = useState({ email: '', password: '' })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -47,8 +48,32 @@ export default function LoginPage() {
         </div>
         <div>
           <label className="label">Password</label>
-          <input className="input" type="password" placeholder="••••••••"
-            value={form.password} onChange={e => setForm({ ...form, password: e.target.value })} required />
+          <div className="relative">
+            <input
+              className="input pr-10"
+              type={showPassword ? 'text' : 'password'}
+              placeholder="••••••••"
+              value={form.password}
+              onChange={e => setForm({ ...form, password: e.target.value })}
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(v => !v)}
+              className="absolute inset-y-0 right-2 flex items-center px-2 text-slate-500 hover:text-slate-700"
+              aria-label={showPassword ? 'Hide password' : 'Show password'}
+            >
+              {showPassword ? (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.875 18.825A10.05 10.05 0 0 1 12 19c-5 0-9.27-3.11-11-7 1.05-2.1 2.7-3.9 4.58-5.05M3 3l18 18" />
+                </svg>
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.36 12.13a14.94 14.94 0 0 1 2.73-3.36C7.4 5.56 9.99 4 12 4c5 0 9.27 3.11 11 7-1.05 2.1-2.7 3.9-4.58 5.05M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                </svg>
+              )}
+            </button>
+          </div>
         </div>
         <button className="btn-primary w-full" type="submit" disabled={loading}>
           {loading ? 'Signing in…' : 'Sign in'}
