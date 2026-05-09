@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && npx prisma migrate deploy && npx prisma db seed && cross-env NODE_ENV=production next build",
+    "build": "prisma generate && npx prisma migrate deploy && node ./scripts/seed-if-needed.js && cross-env NODE_ENV=production next build",
     "start": "next start",
     "postinstall": "prisma generate",
     "db:push": "prisma db push",
